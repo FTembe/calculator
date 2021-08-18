@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Calculadora</title>
+</head>
+<style type="text/css">
+	*{
+		margin: 0;
+		box-sizing: border-box;
+		outline: none;
+	}
+	body{
+		background: #000;
+		width: 100%;
+		height: 100vh;
+	}
+	.content{
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.wrapper{
+		width: 50%;
+		background: #292930;
+		padding: 1rem;
+		border-radius: .5rem;
+	}
+	.display{
+		width: 100%;
+		height: 90px;
+		background: #f8f9fa;
+		padding: 1rem;
+		font-size: 1.3em;
+			border: solid 1px #111;
+
+	}
+	.keyboard{
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.column{
+		display: flex;
+		flex-direction: column;
+		width: 25%;
+	}
+	.row{
+		display: flex;
+		flex-direction: row;
+		
+	}
+	.row span,.row div{
+		width: 25%;
+	}
+	span,
+	#equals,
+	#clear,
+	#expo{	
+		width: 100%;
+		display: block;
+		border: solid 1px #111;
+		text-align: center;
+		background: #fff;
+		color: #000;
+		padding: 2rem 0;
+		cursor: pointer;
+		font-size: 22px;
+		font-weight: bold;
+	}
+	span:hover,
+	#equals:hover,
+	#clear:hover,
+	#expo:hover{
+		background: #111;
+		color: #fff;
+	}
+ </style>
+<body>
+	<div class="content">
+		<div class="wrapper">
+		<input class="display" id="display">
+			<div class="row">
+					<div id="clear">C</div>
+					<div id="expo">x <sup>2</sup></div>
+					<span>^</span>
+					<!-- <span>0</span> -->
+				</div>	
+			<div class="keyboard">
+				
+				<div class="column">
+					<span>7</span>
+					<span>4</span>
+					<span>1</span>
+					<span>0</span>
+				</div>			
+				<div class="column">
+					<span>8</span>
+					<span>5</span>
+					<span>2</span>
+					<span>.</span>
+				</div>			
+				<div class="column">
+					<span>9</span>
+					<span>6</span>
+					<span>3</span>
+					<span>+</span>
+				</div>	
+				<div class="column">
+					<span>/</span>
+					<span>*</span>
+					<span>-</span>
+					<div id="equals">=</div>
+				</div>		
+			</div>
+	</div>
+	</div>
+	<script type="text/javascript">
+		let values='';
+		let operators=/[*+/^-]/
+		let display = document.querySelector("#display")
+
+		function compute(){
+			let search_signal  =display.value.search(operators)
+			let signal=display.value.charAt(search_signal)
+			let new_value=display.value.split(operators)
+			let result=''
+			console.log(signal)
+			switch(signal){
+				case '+':result=parseFloat(new_value[0])+parseFloat(new_value[1]);break;
+				case '*':result=parseFloat(new_value[0])*parseFloat(new_value[1]);break;
+				case '/':result=parseFloat(new_value[0])/parseFloat(new_value[1]);break;
+				case '-':result=parseFloat(new_value[0])-parseFloat(new_value[1]);break;
+				case '^':result=12;break;
+			}
+
+			return result;
+		}
+
+		function showResult(){
+
+			display.value=compute();
+		}
+
+		document.querySelectorAll('span').forEach(function(element){
+			element.addEventListener('click',function(){
+				display.value+= this.innerText
+			})
+		})
+
+		document.querySelector("#equals").addEventListener('click',()=>{
+
+	
+		showResult()
+
+		})
+		document.querySelector("#clear").addEventListener('click',()=>{
+
+	
+		showResult()
+
+		})
+			document.querySelector("#expo").addEventListener('click',()=>{
+
+	
+		expo(display.value,2)
+
+		})
+			function expo(base=0, exponent=2) {
+				let sqrt= Math.pow(base,exponent)
+				display.value=sqrt
+			}
+	</script>
+</body>
+</html>
